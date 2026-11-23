@@ -1,0 +1,54 @@
+# The configuration of this project for AWK. A key that is left out takes its
+# default; every key is described in
+# https://github.com/silver2dream/ai-workflow-kit/blob/main/docs/user/configuration.md
+#
+# After a change, awkit generate writes CLAUDE.md, AGENTS.md and the CI
+# workflows again, and awkit validate checks this file.
+version: "1.2"
+
+project:
+  name: "awk-engine-test"
+  type: "single-repo"
+
+repos:
+  - name: root
+    path: ./
+    type: root
+    language: go
+    verify:
+      # The commands that build and test this project. The Worker runs them
+      # before it opens a pull request and the review runs the tests again,
+      # so both must be set before the first run.
+      build: "go build ./..."
+      test: "go test ./..."
+
+git:
+  # Pull requests are merged into the integration branch. The release branch
+  # is where releases are cut from; with a single trunk the two are the same.
+  integration_branch: "develop"
+  release_branch: "main"
+
+rules:
+  # The project's own rules: a name here is the file .claude/rules/<name>.md.
+  # A Worker is told which of the listed rules apply to the files it changes.
+  custom:
+    - agents
+    - architecture
+    - audit-checklist
+    - coding-style
+    - design-before-implementation
+    - docs-source-of-truth
+    - new-system-owner-boundary
+    - readiness-update-policy
+    - security
+    - testing
+
+worker:
+  # Who writes the code: codex or claude-code.
+  backend: codex
+
+review:
+  # The score out of 10 a review has to give before a pull request is merged,
+  # and how it is merged: squash, merge or rebase.
+  score_threshold: 7
+  merge_strategy: squash
