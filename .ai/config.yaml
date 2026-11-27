@@ -47,6 +47,11 @@ worker:
   # Who writes the code: codex or claude-code.
   backend: codex
 
+engine:
+  # How many steps run at once: Workers that write, the review, the
+  # resolution.
+  max_parallel: 3
+
 review:
   # The score out of 10 a review has to give before a pull request is merged,
   # and how it is merged: squash, merge or rebase.
