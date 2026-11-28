@@ -11,8 +11,8 @@ func TestSetsToWin(t *testing.T) {
 		bestOf int
 		want   int
 	}{
-		{name: "best of three", bestOf: 3, want: 2},
-		{name: "best of five", bestOf: 5, want: 3},
+		{name: "best of three", bestOf: BestOfThree, want: 2},
+		{name: "best of five", bestOf: BestOfFive, want: 3},
 		{name: "negative length", bestOf: -3, want: 0},
 		{name: "zero length", bestOf: 0, want: 0},
 		{name: "best of one", bestOf: 1, want: 0},
